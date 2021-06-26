@@ -1,0 +1,1084 @@
+db.emp.insertMany([
+    {
+        _id:1234,
+        name:"Priyanka",
+        email:"priyanka@gmail.com",
+        salary:3000,
+        dept:10,
+        address:{
+            dno:123,
+            street:"basavanagudi",
+            city:"bangalore",
+            pincode:560086
+        },
+        phone:[1111111111,2222222222]
+    },
+    {
+        _id:1235,
+        name:"Dharini",
+        email:"dharini@gmail.com",
+        salary:7000,
+        dept:10,
+        address:{
+            dno:564,
+            street:"MG road",
+            city:"bangalore",
+            pincode:522003
+        },
+        phone:[6666666666]
+    },
+    {
+        _id:1236,
+        name:"Sanjay",
+        email:"sanjay@gmail.com",
+        salary:2000,
+        dept:20,
+        address:{
+            dno:456,
+            street:"banshankri",
+            city:"bangalore",
+            pincode:560085
+        },
+        phone:[7777777777]
+    },
+    {
+        _id:1237,
+        name:"Abbas",
+        email:"abbas@gmail.com",
+        salary:6000,
+        dept:30,
+        address:{
+            dno:789,
+            street:"Jayanagar",
+            city:"chennai",
+            pincode:546733
+        },
+        phone:[3333333333,9999999999]
+    },
+    {
+        _id:1238,
+        name:"Sivaji",
+        email:"sivaji@gmail.com",
+        salary:10000,
+        dept:20,
+        address:{
+            dno:342,
+            street:"MG road",
+            city:"bangalore",
+            pincode:522003
+        },
+        phone:[8888888888]
+    },
+    {
+        _id:1239,
+        name:"Sateesh",
+        email:"sateesh@gmail.com",
+        salary:9000,
+        dept:30,
+        address:{
+            dno:898,
+            street:"MG road",
+            city:"hyderabad",
+            pincode:517644
+        },
+        phone:[1234567898]
+    },
+
+   
+])
+Getting data
+-find method
+-find({selection},{projection})
+-->all the employees salary whos the phone number is 10 times 9
+ db.emp.find(
+         {
+             phone:9999999999
+        },
+        {name:1,
+        _id:0
+        }).pretty()
+----------------------------------
+        { "name" : "Abbas" }
+---------------------------------
+WQT all the employees residing in bangalore
+db.emp.find(
+         {
+             "address.city":"bangalore"
+        },
+        {name:1,
+        _id:0
+        }).pretty()
+--------------------------------------
+        { "name" : "Priyanka" }
+        { "name" : "Dharini" }
+        { "name" : "Sanjay" }
+        { "name" : "Sivaji" }
+-------------------------------------
+-->name and address of the employees who are residing name bangalore
+db.emp.find(
+         {
+             "address.city":"bangalore"
+        },
+        {name:1,
+        _id:0,
+         "address.city":1
+        }).pretty()
+------------------------------------------------
+        { "name" : "Priyanka", "address" : { "city" : "bangalore" } }
+        { "name" : "Dharini", "address" : { "city" : "bangalore" } }
+        { "name" : "Sanjay", "address" : { "city" : "bangalore" } }
+        { "name" : "Sivaji", "address" : { "city" : "bangalore" } }
+--------------------------------------------------------------
+-->wat email.ids of the all employeess whose slary is 2000
+db.emp.find(
+         {
+             salary:2000
+        },
+        {name:1,
+        _id:0,
+         email:1,
+         salary:1
+        }).pretty()
+--------------------------------------------------
+        { "name" : "Sanjay", "email" : "sanjay@gmail.com" }
+--------------------------------------------------
+-->WAT name of the all the employees whose dno is 564
+db.emp.find(
+         {
+             "address.dno":564
+        },
+        {name:1,
+        _id:0,
+        
+        }).pretty()
+-------------------------
+        { "name" : "Dharini" }
+-------------------------
+-->WAQ dno and name of all the employess who resides in bangalore
+db.emp.find(
+         {
+             "address.city":"bangalore"
+        },
+        {name:1,
+        _id:0,
+        "address.dno":1
+        }).pretty()
+-------------------------------------------------------------
+        { "name" : "Priyanka", "address" : { "dno" : 123 } }
+        { "name" : "Dharini", "address" : { "dno" : 564 } }
+        { "name" : "Sanjay", "address" : { "dno" : 456 } }
+        { "name" : "Sivaji", "address" : { "dno" : 342 } }
+--------------------------------------------------------------
+-->WQT all the employees whose salary is less than 5000
+db.emp.find(
+         {
+             salary:{$lte:5000}
+        },
+        {
+            name:1,
+        _id:0
+        }).pretty()
+-------------------------
+        { "name" : "Sanjay" }
+-------------------------
+-->WQT all the employees name whos salary is less than 8000 and working in dept in 10
+ db.emp.find(
+     {
+         salary:{$lt:8000},
+         dept:10
+     },
+     {
+         name:1,
+         _id:0
+    }
+    ).pretty()
+-------------------------
+    { "name" : "Dharini" }
+    
+-------------------------
+ -->WQT all the employees name who are residing in bangalore and salry is grater than 3000
+  db.emp.find(
+      {
+          salary:{$gt:3000},
+          "address.city":"bangalore"
+      },
+      {
+          name:1,
+          _id:0
+    }
+    ).pretty()
+    
+-------------------------------------
+    { "name" : "Dharini" }
+    { "name" : "Sivaji" }
+--------------------------------------
+  Comparision Operators:-
+  1.$eq
+  2.$ne
+  3.$gte
+  4.$gt
+  5.$lte
+  6.$lt
+  7.$in:-mathes any of the values specified in an arry
+  8.$nin:-matches none of the values specified in an array
+  -->WQT all the employeess whos salary in not equal to 2000 and dept is 10
+   db.emp.find(
+       {
+           salary:{$ne:2000},
+           dept:10
+        }).pretty()
+--------------------------------------------------------------------------
+        {
+        "_id" : 1234,
+        "name" : "Priyanka",
+        "email" : "priyanka@gmail.com",
+        "salary" : "three thousand",
+        "dept" : 10,
+        "address" : {
+                "dno" : 123,
+                "street" : "basavanagudi",
+                "city" : "bangalore",
+                "pincode" : 560086
+        },
+        "phone" : [
+                1111111111,
+                2222222222
+        ]
+}
+{
+        "_id" : 1235,
+        "name" : "Dharini",
+        "email" : "dharini@gmail.com",
+        "salary" : 7000,
+        "dept" : 10,
+        "address" : {
+                "dno" : 564,
+                "street" : "MG road",
+                "city" : "bangalore",
+                "pincode" : 522003
+        },
+        "phone" : [
+                6666666666
+        ]
+}
+------------------------------------------------------------------------------
+   -->All the employees who salary is 1000,2000,3000,6000
+     db.emp.find(
+         {
+             salary:{$in:[1000,2000,3000,6000]}
+        }).pretty()
+-----------------------------------------------------------
+        {
+        "_id" : 1236,
+        "name" : "Sanjay",
+        "email" : "sanjay@gmail.com",
+        "salary" : 2000,
+        "dept" : 20,
+        "address" : {
+                "dno" : 456,
+                "street" : "banshankri",
+                "city" : "bangalore",
+                "pincode" : 560085
+        },
+        "phone" : [
+                7777777777
+        ]
+}
+{
+        "_id" : 1237,
+        "name" : "Abbas",
+        "email" : "abbas@gmail.com",
+        "salary" : 6000,
+        "dept" : 30,
+        "address" : {
+                "dno" : 789,
+                "street" : "Jayanagar",
+                "city" : "chennai",
+                "pincode" : 546733
+        },
+        "phone" : [
+                3333333333,
+                9999999999
+        ]
+}
+----------------------------------------------------------
+-->WQT all the employees whos salary is not equal to 6000,10000,2000 and also display names and also display the city
+     db.emp.find(
+         {
+             salary:{$nin:[10000,6000,3000]}
+        },
+        {name:1,
+        "address.city":1,
+        _id:0
+        }).pretty()
+    --------------------------------------------------------------------
+        { "name" : "Priyanka", "address" : { "city" : "bangalore" } }
+        { "name" : "Dharini", "address" : { "city" : "bangalore" } }
+        { "name" : "Sanjay", "address" : { "city" : "bangalore" } }
+        { "name" : "Sateesh", "address" : { "city" : "hyderabad" } }
+        { "name" : "jhon" }
+    ---------------------------------------------------------------------
+
+    -->The names of the employees and their pincode who salary is either 2000 and 6000 and donot reside in hyderabad
+    db.emp.find(
+         {
+             salary:{$in:[2000,6000]},
+             "address.city":{$ne:"hyderabad"}
+        },
+        {
+            name:1,
+        "address.pincode":1,
+        _id:0
+        }).pretty()
+    -----------------------------------------------------------------------
+        { "name" : "Sanjay", "address" : { "pincode" : 560085 } }
+        { "name" : "Abbas", "address" : { "pincode" : 546733 } }
+    -----------------------------------------------------------------------
+    -->WAT the Streat name and emp name who reside in bangalore
+    db.emp.find(
+         {
+             
+             "address.city":"bangalore"
+        },
+        {
+            name:1,
+        "address.street":1,
+        _id:0
+        }).pretty()
+    ----------------------------------------------------------
+        { "name" : "Priyanka", "address" : { "street" : "basavanagudi" } }
+        { "name" : "Dharini", "address" : { "street" : "MG road" } }
+        { "name" : "Sanjay", "address" : { "street" : "banshankri" } }
+        { "name" : "Sivaji", "address" : { "street" : "MG road" } }
+    -----------------------------------------------------------
+        Logical Operators
+    -----------------
+        1.$and:-It is used to join query clauses with a logical AND and return all documents that match the given conditions of both clauses.
+        2.$or	It is used to join query clauses with a logical OR and return all documents that match the given conditions of either clause.
+        3.$not	It is used to invert the effect of the query expressions and return documents that does not match the query expression.
+        4.It is used to join query clauses with a logical NOR and return all documents that fail to match both clauses.
+        -->all the employees whos the salary is not graterthan 5000
+        db.emp.find(
+         {
+             
+            salary:{$lte:5000}
+        },
+        {
+            name:1,
+       
+        _id:0
+        }).pretty()
+    -------------------(or)-----------------
+         db.emp.find(
+         {
+             
+            salary:{$not:{$gt:5000}}
+        },
+        {
+            name:1,
+       
+        _id:0
+        }).pretty()
+    ---------------------------
+        { "name" : "Sanjay" }
+    --------------------------
+        -->All the emps name whos salary is lessthan 5000 and city is bangalore using and operator
+        db.emp.find(
+         {
+             $and:[
+                 {
+                     "address.city":"bangalore"
+                     },
+                 { 
+                     salary:{$not:{$lt:5000}}
+                     }
+
+             ]
+           
+        },
+        {
+            name:1,
+       
+        _id:0
+        }).pretty()
+    ------------------------------------
+        { "name" : "Priyanka" }
+        { "name" : "Dharini" }
+        { "name" : "Sivaji" }
+    --------------------------------------
+
+        -->all the employees whos city is not banglr nd salary is not less than 5000
+         db.emp.find(
+         {
+             $nor:[
+                 {
+                     "address.city":"bangalore"
+                     },
+                 { 
+                     salary:{$lt:5000}
+                     }
+
+             ]
+           
+        },
+        {
+            name:1,
+       
+        _id:0
+        }).pretty()
+    -------------------------------------
+        { "name" : "Abbas" }
+        { "name" : "Sateesh" }
+        { "name" : "jhon" }
+    ------------------------------------
+    ----------------------------- (or)---fail this one-----
+         db.emp.find(
+         {
+             $not:[
+                 {
+                     "address.city":"bangalore"
+                     },
+                 { 
+                     salary:{$lt:5000}
+                     }
+
+             ]
+           
+        },
+        {
+            name:1,
+       
+        _id:0
+        }).pretty()
+-->WQT all the emps who has field temporary
+ element operator
+ ---------------
+ db.emp.insert(
+     {
+         _id:1230,
+         temporary:true,
+         name:"jhon"
+     })
+    ---------------------------------------------------------------------------------------
+     WriteResult({
+        "nInserted" : 0,
+        "writeError" : {
+                "code" : 11000,
+                "errmsg" : "E11000 duplicate key error collection: emp.emp index: _id_ dup key: { _id: 1230.0 }"
+        }
+})
+---------------------------------------------------------------------------------------------------
+ 1.$exists:-{field:{$exists:<boolean>}}
+ Query:
+       db.emp.find(
+           {
+               temporary:{$exists:true}
+           }).pretty()
+---------------------------------------------------------------
+{ "_id" : 1230, "temporary" : true, "name" : "jhon" }
+--------------------------------------------------------------
+db.emp.find(
+    {
+        temporary:{$exists:true}
+    })
+    --------------------------------------------------
+{ "_id" : 1230, "temporary" : true, "name" : "jhon" }
+-------------------------------------------------------
+> db.emp.find(
+    {
+        temporary:{$exists:false}
+    })
+----------------------------------------------------------------------------------------------------------------------
+{ "_id" : 1234, "name" : "Priyanka", "email" : "priyanka@gmail.com", "salary" : 3000, "dept" : 10, "address" : { "dno" : 123, "street" : "basavanagudi", "city" : "bangalore", "pincode" : 560086 }, "phone" : [ 1111111111, 2222222222 ] }
+{ "_id" : 1235, "name" : "Dharini", "email" : "dharini@gmail.com", "salary" : 7000, "dept" : 10, "address" : { "dno" : 564, "street" : "MG road", "city" : "bangalore", "pincode" : 522003 }, "phone" : [ 6666666666 ] }
+{ "_id" : 1236, "name" : "Sanjay", "email" : "sanjay@gmail.com", "salary" : 2000, "dept" : 20, "address" : { "dno" : 456, "street" : "banshankri", "city" : "bangalore", "pincode" : 560085 }, "phone" : [ 7777777777 ] }
+{ "_id" : 1237, "name" : "Abbas", "email" : "abbas@gmail.com", "salary" : 6000, "dept" : 30, "address" : { "dno" : 789, "street" : "Jayanagar", "city" : "chennai", "pincode" : 546733 }, "phone" : [ 3333333333, 9999999999 ] }
+{ "_id" : 1238, "name" : "Sivaji", "email" : "sivaji@gmail.com", "salary" : 10000, "dept" : 20, "address" : { "dno" : 342, "street" : "MG road", "city" : "bangalore", "pincode" : 522003 }, "phone" : [ 8888888888 ] }
+{ "_id" : 1239, "name" : "Sateesh", "email" : "sateesh@gmail.com", "salary" : 9000, "dept" : 30, "address" : { "dno" : 898, "street" : "MG road", "city" : "hyderabad", "pincode" : 517644 }, "phone" : [ 1234567898 ] }
+-----------------------------------------------------------------------------------------------------------------------
+-->WAT all the employees whos the salary is type string 
+2.$type:-{field:{$type:<data type>}}
+db.emp.find(
+    {
+        salary:{$type:"string"}
+    }).pretty()
+------------------------------------------------------------------
+{
+        "_id" : 1234,
+        "name" : "Priyanka",
+        "email" : "priyanka@gmail.com",
+        "salary" : "three thousand",
+        "dept" : 10,
+        "address" : {
+                "dno" : 123,
+                "street" : "basavanagudi",
+                "city" : "bangalore",
+                "pincode" : 560086
+        },
+        "phone" : [
+                1111111111,
+                2222222222
+        ]
+}
+------------------------------------------------------------------------
+-->WAT three emp names
+we have method:limit
+---------------------
+Displays the first n "documents
+Accepts the integer as an arguement
+db.emp.find(
+    {
+
+    },
+    {
+        name:1,
+        _id:0
+    }).limit(3)
+--------------------------------------------------------
+    { "name" : "Priyanka" }
+    { "name" : "Dharini" }
+    { "name" : "Sanjay" }
+-----------------------------------------------------
+-->
+Count
+-----
+db.emp.find().count();
+---------
+7
+---------
+the limit method not effected on count method
+db.emp.find(
+    {
+
+    },
+    {
+        name:1,
+        _id:0
+    }).limit(4).count();
+-------
+7
+-------
+-->WAT all the employees salary in ascending order
+we have one method is sort
+db.emp.find(
+    {
+
+    },
+    {
+        salary:1,
+        _id:0
+    }).sort({salary:1})
+----------------------------------------------------
+{  }
+{ "salary" : 2000 }
+{ "salary" : 6000 }
+{ "salary" : 7000 }
+{ "salary" : 9000 }
+{ "salary" : 10000 }
+{ "salary" : "three thousand" }
+----------------------------------------------------
+-->WAT all the employees salary in descending order
+we have one method is sort
+db.emp.find(
+    {
+
+    },
+    {
+        salary:1,
+        _id:0
+    }).sort({salary:-1})
+--------------------------------------------------
+{ "salary" : "three thousand" }
+{ "salary" : 10000 }
+{ "salary" : 9000 }
+{ "salary" : 7000 }
+{ "salary" : 6000 }
+{ "salary" : 2000 }
+{  }
+--------------------------------------------------
+-->WAT the name and salary of  highly paid employees
+db.emp.find(
+    {
+
+    },
+    {
+        name:1,
+        _id:0
+    }).sort({salary:-1})
+------------------------------------------------
+{ "name" : "Priyanka" }
+{ "name" : "Sivaji" }
+{ "name" : "Sateesh" }
+{ "name" : "Dharini" }
+{ "name" : "Abbas" }
+{ "name" : "Sanjay" }
+{ "name" : "jhon" }
+--------------------------------------------------
+-->WAT the name and salary of two highly paid emp
+db.emp.find(
+    {
+        salary:{$type:"number"}
+    },
+    {
+        salary:1,
+        name:1,
+        _id:0
+    }).sort({salary:-1}).limit(2)
+-------------------------------------
+    { "name" : "Sivaji", "salary" : 10000 }
+    { "name" : "Sateesh", "salary" : 9000 }
+--------------------------------------
+-->WAT the name and salary of two least paid emp
+db.emp.find(
+    {
+        salary:{$type:"number"}
+    },
+    {
+        salary:1,
+        _id:0,
+        name:1
+    }).sort({salary:1}).limit(2)
+------------------------------------------
+    { "name" : "Sanjay", "salary" : 2000 }
+    { "name" : "Abbas", "salary" : 6000 }
+------------------------------------------
+    Update Operators
+----------------
+    $set;-{ $set: { <field1>: <value1>, ... } }  
+    $unset:-{ $unset: { <field1>: "", ... } }  
+    $rename:-{$rename: { <field1>: <newName1>, <field2>: <newName2>, ... } }  
+    $inc:-{ $inc: { <field1>: <amount1>, <field2>: <amount2>, ... } }  
+    $mul;-{ $mul: { <field1>: <number1>, ... } }  
+    $min:-{ $min: { <field1>: <value1>, ... } }  
+    $max:-{ $max: { <field1>: <value1>, ... } }  
+    -->WQT to update the salary field as sal
+    db.empp.update(
+        
+        {
+
+        },
+        {
+            $rename:{salary:"sal"}
+        },
+        {
+
+        }
+
+    )
+--------------------------------------------------------
+    WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+--------------------------------------------------------------
+    it update only sal:"three thousand",next query in we are using option is  || multi:true ||
+     db.emp.update(
+        
+        {
+
+        },
+        {
+            $rename:{salary:"sal"}
+        },
+        {
+            multi:true
+        }
+
+    )
+-------------------------------------------------------------
+    WriteResult({ "nMatched" : 7, "nUpserted" : 0, "nModified" : 6 })
+-------------------------------------------------------------
+-->WAT increment all the emps salary by 500
+db.emp.update(
+        
+        {
+
+        },
+        {
+            $inc:{sal:500}
+        },
+        {
+            multi:true
+        }
+
+    )
+  -->delete  the employees
+  -----------------------------------
+  db.emp.remove({name:"priyanka"})
+  -->WAT remove the dno for all the employees
+  in tha we are using unset
+  db.emp.update(
+        
+        {
+
+        },
+        {
+            $unset:{"address.dno":""}
+        },
+        {
+            multi:true
+        }
+
+    )
+---------------------------------
+     db.emp.update(
+        
+        {
+            _id:1234
+        },
+        {
+            $unset:{sal:""}
+        },
+        {
+           
+        }
+
+    )
+-->sal of an emp to 50000 whos id is 1230
+
+ db.emp.update(
+        
+        {
+            _id:9999
+        },
+        {
+            $set:{sal:14000}
+        },
+        {
+           
+        }
+
+    )
+    Upsert
+ --------
+    db.emp.update(
+        
+        {
+            _id:9999
+        },
+        {
+            $set:{sal:50000}
+        },
+        {
+           upsert:true
+        }
+
+    )
+ -->increment by all the emp sal by 50%
+    db.emp.update(
+        
+        {
+            
+        },
+        {
+            $mul:{sal:1.5}
+        },
+        {
+           multi:true
+        }
+
+    )
+ -----------------
+    WriteResult({ "nMatched" : 9, "nUpserted" : 0, "nModified" : 9 })
+ ---------------------------------------------------------------------
+    $max will update the specified value
+    -->WA to ensure that every emp will have a salary above 10000
+    db.emp.update(
+        
+        {
+            
+        },
+        {
+            $min:{sal:10000}
+        },
+        {
+           multi:true
+        }
+
+    )
+    -->max updates the values of to the specified valiue ,if the specified value is grater than the current value
+    -->the min operator updates the value of the field to the specified value ,if the specified value is less than the current value of the field
+    > show collections
+emp
+> use sivaji
+switched to db sivaji
+> db.createCollection("siva")
+{ "ok" : 1 }
+> show collections
+siva
+> show dbs
+admin          0.000GB
+config         0.000GB
+demo           0.000GB
+emp            0.000GB
+local          0.000GB
+myNewDatabase  0.000GB
+sivaji         0.000GB
+test           0.000GB
+> use sivaji
+switched to db sivaji
+> db.dropDatabase()
+{ "dropped" : "sivaji", "ok" : 1 }
+> show dbs
+admin          0.000GB
+config         0.000GB
+demo           0.000GB
+emp            0.000GB
+local          0.000GB
+myNewDatabase  0.000GB
+test           0.000GB
+-->WA to delete an whos name is jhon
+db.emp.remove({name:"jhon"})
+----------------------------------
+-->WAT all the employees who are working in dept 10 with aggrigation method
+ db.emp.aggregate(
+       [
+           {
+               $match:{
+                   dept:10
+               }
+           }
+       ]
+
+    )
+------------------------------------------------------------------
+{
+        "_id" : 1234,
+        "name" : "Priyanka",
+        "email" : "priyanka@gmail.com",
+        "dept" : 10,
+        "address" : {
+                "street" : "basavanagudi",
+                "city" : "bangalore",
+                "pincode" : 560086
+        },
+        "phone" : [
+                1111111111,
+                2222222222
+        ],
+        "sal" : 15750
+}
+{
+        "_id" : 1235,
+        "name" : "Dharini",
+        "email" : "dharini@gmail.com",
+        "dept" : 10,
+        "address" : {
+                "street" : "MG road",
+                "city" : "bangalore",
+                "pincode" : 522003
+        },
+        "phone" : [
+                6666666666
+        ],
+        "sal" : 15750
+}
+>
+
+---------------------------------------------------------
+-->WAT all the employees name and dept number whos salary is graterthan 5000
+db.emp.aggregate(
+       [
+           {
+               $match:{
+                  sal:{$gt:5000}
+               }
+           },
+           {
+               $project:{
+                   name:1,
+                   dept:1,
+                   _id:0
+               }
+           }
+       ]
+
+    )
+--------------------------------------------------------------
+    { "name" : "Priyanka", "dept" : 10 }
+{ "name" : "Dharini", "dept" : 10 }
+{ "name" : "Sanjay", "dept" : 20 }
+{ "name" : "Abbas", "dept" : 30 }
+{ "name" : "Sivaji", "dept" : 20 }
+{ "name" : "Sateesh", "dept" : 30 }
+{  }
+{  }
+---------------------------------------------------------------------
+-->WQT emp who is getting highest salary using aggrigation
+db.emp.aggregate(
+       [
+           {
+               $sort:{sal:-1}
+               
+           },
+           {
+               $limit:1
+           }
+       ]
+
+    )
+-->WAT all the dept 
+db.emp.aggregate(
+       [
+           {
+              $group:{_id:{dept:"$dept"}}
+               
+           }
+       ]
+
+    )
+    -->The numberof emps in each dept
+    group operator 
+-----------------
+    $sum
+    $avg
+    $max
+    $min
+    db.emp.aggregate(
+       [
+           {
+              $group:{_id:{dept:"$dept"},
+              count:{$sum:1}}
+               
+           }
+       ]
+
+    )
+-----------------------------------------------------------------------------
+    { "_id" : { "dept" : 20 }, "count" : 2 }
+{ "_id" : { "dept" : 10 }, "count" : 2 }
+{ "_id" : { "dept" : 30 }, "count" : 2 }
+---------------------------------------------------------------------------------
+-->WAT the sum of the salaries in each dept
+
+db.emp.aggregate(
+       [
+           {
+              $group:{_id:{dept:"$dept"},
+              sumOfsal:{$sum:"$sal"}}
+               
+           }
+       ]
+
+    )
+    -->WAT the dept which is paying the highest salary
+    db.emp.aggregate(
+       [
+           {
+              $group:{_id:{dept:"$dept"},
+              sumOfsal:{$sum:"$sal"}}
+               
+           },{
+               $sort:{sum:-1}
+           }
+           ,{
+               $limit:1
+           }
+       ]
+
+    )
+    --------------------
+    { "_id" : { "dept" : 10 }, "sumOfsal" : 0 }
+    ---------------
+    -->WAT the highest in each dept 
+    db.emp.aggregate(
+       [
+           {
+              $group:{_id:{dept:"$dept"},
+              highestSalary:{$max:"$sal"}}
+           }
+             
+       ]
+
+    )
+    -------------------------------------------------------------
+    { "_id" : { "dept" : 10 }, "highestSalary" : 12000 }
+{ "_id" : { "dept" : 20 }, "highestSalary" : 8000 }
+{ "_id" : { "dept" : 30 }, "highestSalary" : 10000 }
+-----------------------------------------------------------------
+ -->WAT the minimum in each dept 
+    db.emp.aggregate(
+       [
+           {
+              $group:{_id:{dept:"$dept"},
+             minimumSalary:{$min:"$sal"}}
+           }
+             
+       ]
+    )
+    -------------------------------------------------------------------------------
+    { "_id" : { "dept" : 10 }, "minimumSalary" : 2000 }
+{ "_id" : { "dept" : 20 }, "minimumSalary" : 4000 }
+{ "_id" : { "dept" : 30 }, "minimumSalary" : 6000 }
+>
+       ------------------------------------------------------------------
+
+
+    unwind
+    ---------------
+    db.emp.aggregate(
+       [
+           {
+             $match:{_id:1237}
+           }
+             ,{
+                 $unwind:"$phone"
+             }
+       ]
+    )
+-----------------------------------------------------------------------------
+{
+        "_id" : 1237,
+        "name" : "Abbas",
+        "email" : "abbas@gmail.com",
+        "dept" : 30,
+        "address" : {
+                "street" : "Jayanagar",
+                "city" : "chennai",
+                "pincode" : 546733
+        },
+        "phone" : 3333333333,
+        "sal" : 6000
+}
+{
+        "_id" : 1237,
+        "name" : "Abbas",
+        "email" : "abbas@gmail.com",
+        "dept" : 30,
+        "address" : {
+                "street" : "Jayanagar",
+                "city" : "chennai",
+                "pincode" : 546733
+        },
+        "phone" : 9999999999,
+        "sal" : 6000
+}
+--------------------------------------------------------------------------------------------------
+Indexing
+----------
+> db.emp.ensureIndex({"email":1})
+{
+        "createdCollectionAutomatically" : false,
+        "numIndexesBefore" : 1,
+        "numIndexesAfter" : 2,
+        "ok" : 1
+}
+> db.emp.getIndexes()
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "email" : 1
+                },
+                "name" : "email_1"
+        }
+]
+the major advantage of indexing as when you have millions of documents covering the data is going to take a huge amount 
+of time and creating an index is going to reduce it down to a fractions now would not want to create an index of each in
+every field and in the document because then you would just be creating recreating the document itself so you want to
+create an index on the fields that you think  are going to be unique in the document for example an email id or a username or  
+an emp id and on this  basis so thats it about indexex

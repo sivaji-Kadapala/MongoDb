@@ -1,0 +1,69 @@
+MongoDB
+--------
+-NoSQl Database
+-use it anytime you want to store data and persist it in your app 
+-mongo is the M in MEAN or MERN
+Traditional Database
+--------------------
+-organized collectionof data
+-notion of tables
+-primary and foreign keys
+-design schema
+-ACID properties
+-MS SQL server,Oracle Database,MySQL,IBM DB2
+Limitations of RDBMS
+---------------------
+-Scalability
+-Data Complexity
+-Broken keys
+-Define schema before load
+what is NoSQl
+--------------
+-A form of database management system that is non-relational
+-Term NSQL coined in 1998 by carlo Strozzi
+-Data is more complex 
+-Many NoSQl databases
+-NoSQl is queries are focused on collection of documents.
+NoSQl:mongoDb,Redis,casandra,HBase,Neo4J
+why NoSQl
+---------
+-Non-relational/distributed database
+-No schema required
+-Auto Elasticity
+-Integrateded caching 
+-Simpler Data Model
+Document based-MongoDB,Couchbase
+key/value based-Redis,MemcacheD
+column based:Cassandra,HBase
+Graph based:OrientDB,Neo4J
+RDBMS  VS MongoDB
+-----------------
+Database-Database
+tables-collections
+Rows-documents
+columns-fields
+join-Embed/Link documents
+-->A single instance of mongo can hold multiple databases
+-->Every doc has a special key "_id"-->unique to collection j
+Document:-key & associated values.
+Why use MongoDB
+--------------------
+-SQL was invented in the 70's to store data
+-MongoDB stores documents or objects
+-now a days every one works with objects(python/ruby/java/ets)
+-And we need database to persist our objects. then why not store objects directly ?
+-embedded documents and arrays reduce need for joins.No joins and No-multidocument transactions.
+Database is made of collections
+--------------------------------
+-made up of Multiple collections
+-Created on-the-fly when referenced for the first time.
+Collection is tables
+------------------------
+---------------------------
+bind ip=127.0.0.1
+port=27017
+-mongo is case sensitive and type sensitive
+-you can not have duplicate keys,both are distrinct
+-documents doesnot maintaining the order
+-collection have dynamic schema
+
