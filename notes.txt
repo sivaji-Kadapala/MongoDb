@@ -1050,6 +1050,31 @@ db.emp.aggregate(
         "phone" : 9999999999,
         "sal" : 6000
 }
+-->Display the cities in descending order
+ db.emp.aggregate([{$group:{_id:"$address.city"}},{$sort:{_id:-1}}])
+{ "_id" : "hyderabad" }
+{ "_id" : "chennai" }
+{ "_id" : "bangalore" }
+-->Display the names in ascending order
+> db.emp.aggregate([{$group:{_id:"$name"}},{$sort:{_id:1}}])
+{ "_id" : "Abbas" }
+{ "_id" : "Dharini" }
+{ "_id" : "Priyanka" }
+{ "_id" : "Sanjay" }
+{ "_id" : "Sateesh" }
+{ "_id" : "Sivaji" }
+-->whos salary is graterthan 5000 using aggrigation
+db.emp.aggregate([{$match:{sal:{$gt:5000}}},{$project:{_id:0,name:1}}])
+{ "name" : "Priyanka" }
+{ "name" : "Abbas" }
+{ "name" : "Sivaji" }
+{ "name" : "Sateesh" }
+-->WAT the dept which is paying the highest salary in top three employess
+> db.emp.aggregate([{$sort:{salary:-1}},{$project:{_id:0,name:1,salary:1}},{$limit:3}])
+{ "name" : "Priyanka" }
+{ "name" : "Dharini" }
+{ "name" : "Sanjay" }
+>
 --------------------------------------------------------------------------------------------------
 Indexing
 ----------
